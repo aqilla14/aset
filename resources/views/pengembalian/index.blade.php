@@ -10,7 +10,7 @@ Data Pengembalian </li>
 
 @section('content')
 
-```
+
 <div class="card">
 
     <div class="card-header">
@@ -263,6 +263,6 @@ Data Pengembalian </li>
     </div>
 
 </div>
-```
+
 
 @endsection

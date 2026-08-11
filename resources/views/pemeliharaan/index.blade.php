@@ -10,7 +10,6 @@ Data Pemeliharaan </li>
 
 @section('content')
 
-```
 <div class="card">
 
     <div class="card-header">
@@ -202,6 +201,5 @@ Data Pemeliharaan </li>
     </div>
 
 </div>
-```
 
 @endsection
