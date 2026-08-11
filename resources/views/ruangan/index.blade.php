@@ -91,29 +91,34 @@
                                 <td>
 
                                     {{-- DETAIL --}}
-                                    <a href="{{ route('ruangan.show', $ruangan->id) }}" class="btn btn-info btn-sm"
-                                        title="Detail">
-
+                                    <a href="{{ route('ruangan.show', $ruangan->id) }}" 
+                                       class="btn btn-info btn-sm"
+                                       title="Lihat detail ruangan {{ $ruangan->nama_ruangan }}"
+                                       data-toggle="tooltip">
                                         <i class="fas fa-eye"></i>
-
                                     </a>
 
                                     {{-- EDIT --}}
-                                    <a href="{{ route('ruangan.edit', $ruangan->id) }}" class="btn btn-warning btn-sm"
-                                        title="Edit">
-
+                                    <a href="{{ route('ruangan.edit', $ruangan->id) }}" 
+                                       class="btn btn-warning btn-sm"
+                                       title="Edit ruangan {{ $ruangan->nama_ruangan }}"
+                                       data-toggle="tooltip">
                                         <i class="fas fa-edit"></i>
-
                                     </a>
 
                                     {{-- HAPUS --}}
-                                    <form action="{{ route('ruangan.destroy', $ruangan->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('ruangan.destroy', $ruangan->id) }}" 
+                                          method="POST" 
+                                          class="d-inline">
 
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus"
-                                            onclick="return confirm('Yakin ingin menghapus ruangan ini?')">
+                                        <button type="submit" 
+                                                class="btn btn-danger btn-sm" 
+                                                title="Hapus ruangan {{ $ruangan->nama_ruangan }}"
+                                                data-toggle="tooltip"
+                                                onclick="return confirm('Yakin ingin menghapus ruangan {{ $ruangan->nama_ruangan }}?')">
 
                                             <i class="fas fa-trash"></i>
 
@@ -153,3 +158,14 @@
     </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip({
+            placement: 'top',
+            trigger: 'hover'
+        });
+    });
+</script>
+@endpush
