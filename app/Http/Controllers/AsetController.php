@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Aset;
 use App\Models\Kategori;
 use App\Models\Ruangan;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class AsetController extends Controller
@@ -13,7 +14,7 @@ class AsetController extends Controller
      */
     public function index()
     {
-        $asets = Aset::with(['kategori', 'ruangan'])->get();
+        $asets = Aset::with(['kategori', 'ruangan', 'supplier'])->get();
         return view('aset.index', compact('asets'));
     }
 
@@ -24,7 +25,8 @@ class AsetController extends Controller
     {
         $kategoris = Kategori::all();
         $ruangans  = Ruangan::all();
-        return view('aset.create', compact('kategoris', 'ruangans'));
+        $suppliers = Supplier::all(); 
+        return view('aset.create', compact('kategoris', 'ruangans', 'suppliers'));
     }
 
     /**
@@ -37,6 +39,7 @@ class AsetController extends Controller
             'nama_aset'         => 'required',
             'kategori_id'       => 'required|exists:kategoris,id',
             'ruangan_id'        => 'required|exists:ruangans,id',
+            'supplier_id'       => 'nullable|exists:suppliers,id',
             'status'            => 'required|in:tersedia,dipinjam,rusak,pemeliharaan',
             'tanggal_perolehan' => 'required|date',
             'harga'             => 'required|numeric|min:0',
@@ -54,6 +57,7 @@ class AsetController extends Controller
      */
     public function show(Aset $aset)
     {
+        $aset->load(['kategori', 'ruangan', 'supplier']);
         return view('aset.show', compact('aset'));
     }
 
@@ -64,7 +68,8 @@ class AsetController extends Controller
     {
         $kategoris = Kategori::all();
         $ruangans  = Ruangan::all();
-        return view('aset.edit', compact('aset', 'kategoris', 'ruangans'));
+        $suppliers = Supplier::all();
+        return view('aset.edit', compact('aset', 'kategoris', 'ruangans', 'suppliers'));
     }
 
     /**
@@ -77,6 +82,7 @@ class AsetController extends Controller
             'nama_aset'         => 'required',
             'kategori_id'       => 'required|exists:kategoris,id',
             'ruangan_id'        => 'required|exists:ruangans,id',
+            'supplier_id'       => 'nullable|exists:suppliers,id', // ← TAMBAHKAN INI
             'status'            => 'required|in:tersedia,dipinjam,rusak,pemeliharaan',
             'tanggal_perolehan' => 'required|date',
             'harga'             => 'required|numeric|min:0',

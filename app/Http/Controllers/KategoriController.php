@@ -1,11 +1,11 @@
 <?php
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use App\Models\Kategori;
-use Illuminate\Http\Request;
+    use App\Models\Kategori;
+    use Illuminate\Http\Request;
 
-class KategoriAsetController extends Controller
-{
+    class KategoriController extends Controller
+    {
     /**
      * Display a listing of the resource.
      */
@@ -42,30 +42,30 @@ class KategoriAsetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kategori $kategoriAset)
+    public function show(Kategori $kategori)
     {
-        return view('kategori.show', compact('kategoriAset'));
+        return view('kategori.show', compact('kategori'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kategori $kategoriAset)
+    public function edit(Kategori $kategori)
     {
-        return view('kategori.edit', compact('kategoriAset'));
+        return view('kategori.edit', compact('kategori'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kategori $kategoriAset)
+    public function update(Request $request, Kategori $kategori)
     {
         $request->validate([
-            'nama_kategori' => 'required|unique:kategoris,nama_kategori,' . $kategoriAset->id,
+            'nama_kategori' => 'required|unique:kategoris,nama_kategori,' . $kategori->id,
             'deskripsi'     => 'nullable',
         ]);
 
-        $kategoriAset->update($request->all());
+        $kategori->update($request->all());
 
         return redirect()->route('kategori.index')
             ->with('success', 'Kategori berhasil diperbarui!');
@@ -74,9 +74,9 @@ class KategoriAsetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kategori $kategoriAset)
+    public function destroy(Kategori $kategori)
     {
-        $kategoriAset->delete();
+        $kategori->delete();
 
         return redirect()->route('kategori.index')
             ->with('success', 'Kategori berhasil dihapus!');
