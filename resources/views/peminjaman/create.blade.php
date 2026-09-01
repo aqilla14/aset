@@ -1,345 +1,158 @@
 @extends('layouts.app')
 
-
 @section('title', 'Tambah Peminjaman')
-
 
 @section('page-title', 'Tambah Peminjaman')
 
-
-@section('breadcrumb')
-
-    <li class="breadcrumb-item">
-        <a href="{{ route('peminjaman.index') }}">Data Peminjaman</a>
-    </li>
-
+@section('breadcrumb') <li class="breadcrumb-item"> <a href="{{ route('peminjaman.index') }}">Data Peminjaman</a> </li>
     <li class="breadcrumb-item active">
-        Tambah Peminjaman
-    </li>
-
+        Tambah Peminjaman </li>
 @endsection
-
-
 
 @section('content')
 
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-handshake mr-2"></i>
+                Tambah Peminjaman
+            </h3>
+        </div>
 
-<div class="card">
+        <div class="card-body">
 
+            <form action="{{ route('peminjaman.store') }}" method="POST">
+                @csrf
 
-    <div class="card-header">
+                <div class="form-group">
+                    <label>Nama Peminjam</label>
 
-        <h3 class="card-title">
+                    <input type="text" name="peminjam" class="form-control @error('peminjam') is-invalid @enderror"
+                        value="{{ old('peminjam') }}" placeholder="Masukkan nama peminjam">
 
-            <i class="fas fa-handshake mr-2"></i>
+                    @error('peminjam')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-            Tambah Peminjaman
+                <div class="form-group">
+                    <label>NIP / NIM</label>
 
-        </h3>
+                    <input type="text" name="nip_nim" class="form-control @error('nip_nim') is-invalid @enderror"
+                        value="{{ old('nip_nim') }}" placeholder="Masukkan NIP / NIM">
 
-    </div>
+                    @error('nip_nim')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
+                <div class="form-group">
+                    <label>Pilih Aset</label>
 
+                    <select name="aset_id" class="form-control @error('aset_id') is-invalid @enderror">
 
+                        <option value="">-- Pilih Aset --</option>
 
-    <div class="card-body">
+                        @foreach ($asets as $aset)
+                            <option value="{{ $aset->id }}" {{ old('aset_id') == $aset->id ? 'selected' : '' }}>
+                                {{ $aset->nama_aset }}
+                            </option>
+                        @endforeach
 
+                    </select>
 
+                    @error('aset_id')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-        <form action="{{ route('peminjaman.store') }}" method="POST">
+                <div class="form-group">
+                    <label>Tanggal Pinjam</label>
 
+                    <input type="date" name="tanggal_pinjam"
+                        class="form-control @error('tanggal_pinjam') is-invalid @enderror"
+                        value="{{ old('tanggal_pinjam', date('Y-m-d')) }}">
 
-            @csrf
+                    @error('tanggal_pinjam')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
+                <div class="form-group">
+                    <label>Tanggal Kembali Rencana</label>
 
+                    <input type="date" name="tanggal_kembali_rencana"
+                        class="form-control @error('tanggal_kembali_rencana') is-invalid @enderror"
+                        value="{{ old('tanggal_kembali_rencana') }}">
 
+                    @error('tanggal_kembali_rencana')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
-            <div class="form-group">
+                <div class="form-group">
+                    <label>Status</label>
 
-                <label>
-                    Nama Peminjam
-                </label>
+                    <select name="status" class="form-control @error('status') is-invalid @enderror">
 
-
-                <input type="text"
-                       name="nama_peminjam"
-                       class="form-control @error('nama_peminjam') is-invalid @enderror"
-                       value="{{ old('nama_peminjam') }}"
-                       placeholder="Masukkan nama peminjam">
-
-
-                @error('nama_peminjam')
-
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-
-                @enderror
-
-
-            </div>
-
-
-
-
-
-            <div class="form-group">
-
-
-                <label>
-                    Pilih Aset
-                </label>
-
-
-
-                <select name="aset_id"
-                        class="form-control @error('aset_id') is-invalid @enderror">
-
-
-                    <option value="">
-                        -- Pilih Aset --
-                    </option>
-
-
-
-                    @foreach($asets as $aset)
-
-
-                        <option value="{{ $aset->id }}"
-                            {{ old('aset_id') == $aset->id ? 'selected' : '' }}>
-
-
-                            {{ $aset->nama_aset }}
-
-
+                        <option value="Dipinjam" {{ old('status', 'Dipinjam') == 'Dipinjam' ? 'selected' : '' }}>
+                            Dipinjam
                         </option>
 
+                        <option value="Selesai" {{ old('status') == 'Selesai' ? 'selected' : '' }}>
+                            Selesai
+                        </option>
 
+                    </select>
 
-                    @endforeach
+                    @error('status')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
+                <div class="form-group">
+                    <label>Keterangan</label>
 
+                    <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" rows="3"
+                        placeholder="Masukkan keterangan">{{ old('keterangan') }}</textarea>
 
-                </select>
+                    @error('keterangan')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
+                <div class="form-group mt-3">
 
+                    <a href="{{ route('peminjaman.index') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left mr-1"></i>
+                        Kembali
+                    </a>
 
-                @error('aset_id')
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save mr-1"></i>
+                        Simpan
+                    </button>
 
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                </div>
 
-                @enderror
+            </form>
 
-
-
-            </div>
-
-
-
-
-
-
-            <div class="form-group">
-
-
-                <label>
-                    Tanggal Pinjam
-                </label>
-
-
-                <input type="date"
-                       name="tanggal_pinjam"
-                       class="form-control @error('tanggal_pinjam') is-invalid @enderror"
-                       value="{{ old('tanggal_pinjam') }}">
-
-
-
-                @error('tanggal_pinjam')
-
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-
-                @enderror
-
-
-            </div>
-
-
-
-
-
-
-
-            <div class="form-group">
-
-
-                <label>
-                    Tanggal Kembali
-                </label>
-
-
-                <input type="date"
-                       name="tanggal_kembali"
-                       class="form-control @error('tanggal_kembali') is-invalid @enderror"
-                       value="{{ old('tanggal_kembali') }}">
-
-
-
-                @error('tanggal_kembali')
-
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-
-                @enderror
-
-
-            </div>
-
-
-
-
-
-
-
-            <div class="form-group">
-
-
-                <label>
-                    Jumlah
-                </label>
-
-
-                <input type="number"
-                       name="jumlah"
-                       class="form-control @error('jumlah') is-invalid @enderror"
-                       value="{{ old('jumlah') }}"
-                       min="1"
-                       placeholder="Jumlah aset yang dipinjam">
-
-
-
-                @error('jumlah')
-
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-
-                @enderror
-
-
-            </div>
-
-
-
-
-
-
-
-            <div class="form-group">
-
-
-                <label>
-                    Status
-                </label>
-
-
-                <select name="status" class="form-control">
-
-
-                    <option value="Dipinjam">
-                        Dipinjam
-                    </option>
-
-
-                    <option value="Selesai">
-                        Selesai
-                    </option>
-
-
-                </select>
-
-
-            </div>
-
-
-
-
-
-
-
-
-            <div class="form-group">
-
-
-                <label>
-                    Keterangan
-                </label>
-
-
-                <textarea name="keterangan"
-                          class="form-control"
-                          rows="3"
-                          placeholder="Masukkan keterangan">{{ old('keterangan') }}</textarea>
-
-
-            </div>
-
-
-
-
-
-
-
-
-            <div class="form-group mt-3">
-
-
-
-                <a href="{{ route('peminjaman.index') }}"
-                   class="btn btn-secondary">
-
-
-                    <i class="fas fa-arrow-left mr-1"></i>
-
-                    Kembali
-
-
-                </a>
-
-
-
-
-
-                <button type="submit"
-                        class="btn btn-primary">
-
-
-                    <i class="fas fa-save mr-1"></i>
-
-                    Simpan
-
-
-                </button>
-
-
-
-            </div>
-
-
-
-
-        </form>
-
-
+        </div>
 
     </div>
-
-
-</div>
-
 
 @endsection
