@@ -90,7 +90,7 @@ class PeminjamanController extends Controller
      */
     public function destroy(Peminjaman $peminjaman)
     {
-        // Update status aset jadi tersedia
+        // Update status aset jadi tersedia 
         Aset::where('id', $peminjaman->aset_id)->update(['status' => 'tersedia']);
 
         $peminjaman->delete();

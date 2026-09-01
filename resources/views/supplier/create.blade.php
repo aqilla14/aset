@@ -133,18 +133,18 @@
             <div class="form-group">
 
                 <label>
-                    Nomor Telepon
+                    Kontak
                 </label>
 
 
                 <input type="text"
-                       name="telepon"
-                       class="form-control @error('telepon') is-invalid @enderror"
-                       value="{{ old('telepon') }}"
-                       placeholder="Masukkan nomor telepon">
+                       name="kontak"
+                       class="form-control @error('kontak') is-invalid @enderror"
+                       value="{{ old('kontak') }}"
+                       placeholder="Masukkan nomor kontak">
 
 
-                @error('telepon')
+                @error('kontak')
 
                     <div class="invalid-feedback">
                         {{ $message }}

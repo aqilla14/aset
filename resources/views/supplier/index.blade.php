@@ -87,7 +87,7 @@
 
                         <th>Alamat</th>
 
-                        <th>No Telepon</th>
+                        <th>No Kontak</th>
 
                         <th>Email</th>
 
@@ -132,7 +132,7 @@
 
 
                         <td>
-                            {{ $supplier->telepon ?? '-' }}
+                            {{ $supplier->kontak ?? '-' }}
                         </td>
 
 
