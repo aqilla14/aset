@@ -17,231 +17,213 @@
 @section('content')
 
 
-<div class="card">
+    <div class="card">
 
 
-    <div class="card-header">
+        <div class="card-header">
 
-        <h3 class="card-title">
-            <i class="fas fa-truck mr-2"></i>
-            Data Supplier
-        </h3>
-
-
-        <div class="card-tools">
-
-            <a href="{{ route('supplier.create') }}" class="btn btn-primary btn-sm">
-
-                <i class="fas fa-plus mr-1"></i>
-                Tambah Supplier
-
-            </a>
-
-        </div>
-
-    </div>
+            <h3 class="card-title">
+                <i class="fas fa-truck mr-2"></i>
+                Data Supplier
+            </h3>
 
 
-    <div class="card-body">
+            <div class="card-tools">
 
+                <a href="{{ route('supplier.create') }}" class="btn btn-primary btn-sm">
 
-        {{-- ALERT SUCCESS --}}
-        @if (session('success'))
+                    <i class="fas fa-plus mr-1"></i>
+                    Tambah Supplier
 
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-
-                <i class="fas fa-check-circle mr-2"></i>
-
-                {{ session('success') }}
-
-
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-
-                    <span aria-hidden="true">
-                        &times;
-                    </span>
-
-                </button>
+                </a>
 
             </div>
 
-        @endif
+        </div>
 
 
+        <div class="card-body">
 
-        <div class="table-responsive">
 
+            {{-- ALERT SUCCESS --}}
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
 
-            <table class="table table-bordered table-hover">
+                    <i class="fas fa-check-circle mr-2"></i>
 
+                    {{ session('success') }}
 
-                <thead>
 
-                    <tr>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 
-                        <th width="50">No</th>
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
 
-                        <th>Nama Supplier</th>
+                    </button>
 
-                        <th>Kode Supplier</th>
+                </div>
+            @endif
 
-                        <th>Alamat</th>
 
-                        <th>No Kontak</th>
 
-                        <th>Email</th>
+            <div class="table-responsive">
 
-                        <th width="150">Aksi</th>
 
-                    </tr>
+                <table class="table table-bordered table-hover">
 
-                </thead>
 
+                    <thead>
 
+                        <tr>
 
-                <tbody>
+                            <th width="50">No</th>
 
+                            <th>Nama Supplier</th>
 
-                @forelse ($suppliers as $index => $supplier)
+                            <th>Alamat</th>
 
-                    <tr>
+                            <th>No Kontak</th>
 
+                            <th>Email</th>
 
-                        <td>
-                            {{ $index + 1 }}
-                        </td>
+                            <th width="150">Aksi</th>
 
+                        </tr>
 
+                    </thead>
 
-                        <td>
-                            {{ $supplier->nama_supplier }}
-                        </td>
 
 
+                    <tbody>
 
-                        <td>
-                            {{ $supplier->kode_supplier ?? '-' }}
-                        </td>
 
+                        @forelse ($suppliers as $index => $supplier)
+                            <tr>
 
 
-                        <td>
-                            {{ $supplier->alamat ?? '-' }}
-                        </td>
+                                <td>
+                                    {{ $index + 1 }}
+                                </td>
 
 
 
-                        <td>
-                            {{ $supplier->kontak ?? '-' }}
-                        </td>
+                                <td>
+                                    {{ $supplier->nama_supplier }}
+                                </td>
 
 
 
-                        <td>
-                            {{ $supplier->email ?? '-' }}
-                        </td>
+                                <td>
+                                    {{ $supplier->alamat ?? '-' }}
+                                </td>
 
 
 
-                        <td>
+                                <td>
+                                    {{ $supplier->kontak ?? '-' }}
+                                </td>
 
 
-                            {{-- DETAIL --}}
 
-                            <a href="{{ route('supplier.show', $supplier->id) }}" 
-                               class="btn btn-info btn-sm"
-                               title="Detail">
+                                <td>
+                                    {{ $supplier->email ?? '-' }}
+                                </td>
 
-                                <i class="fas fa-eye"></i>
 
-                            </a>
 
+                                <td>
 
 
-                            {{-- EDIT --}}
+                                    {{-- DETAIL --}}
 
-                            <a href="{{ route('supplier.edit', $supplier->id) }}" 
-                               class="btn btn-warning btn-sm"
-                               title="Edit">
+                                    <a href="{{ route('supplier.show', $supplier->id) }}" class="btn btn-info btn-sm"
+                                        title="Detail">
 
-                                <i class="fas fa-edit"></i>
+                                        <i class="fas fa-eye"></i>
 
-                            </a>
+                                    </a>
 
 
 
-                            {{-- HAPUS --}}
+                                    {{-- EDIT --}}
 
-                            <form action="{{ route('supplier.destroy', $supplier->id) }}" 
-                                  method="POST" 
-                                  class="d-inline">
+                                    <a href="{{ route('supplier.edit', $supplier->id) }}" class="btn btn-warning btn-sm"
+                                        title="Edit">
 
+                                        <i class="fas fa-edit"></i>
 
-                                @csrf
+                                    </a>
 
-                                @method('DELETE')
 
 
-                                <button type="submit" 
-                                        class="btn btn-danger btn-sm" 
-                                        title="Hapus"
-                                        onclick="return confirm('Yakin ingin menghapus supplier ini?')">
+                                    {{-- HAPUS --}}
 
+                                    <form action="{{ route('supplier.destroy', $supplier->id) }}" method="POST"
+                                        class="d-inline">
 
-                                    <i class="fas fa-trash"></i>
 
+                                        @csrf
 
-                                </button>
+                                        @method('DELETE')
 
 
-                            </form>
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus"
+                                            onclick="return confirm('Yakin ingin menghapus supplier ini?')">
 
 
-                        </td>
+                                            <i class="fas fa-trash"></i>
 
 
-                    </tr>
+                                        </button>
 
 
-                @empty
+                                    </form>
 
 
-                    <tr>
+                                </td>
 
 
-                        <td colspan="7" class="text-center py-4">
+                            </tr>
 
 
-                            <i class="fas fa-truck fa-2x text-muted mb-2"></i>
+                        @empty
 
 
-                            <p class="mb-0">
-                                Belum ada data supplier
-                            </p>
+                            <tr>
 
 
-                        </td>
+                                <td colspan="7" class="text-center py-4">
 
 
-                    </tr>
+                                    <i class="fas fa-truck fa-2x text-muted mb-2"></i>
 
 
-                @endforelse
+                                    <p class="mb-0">
+                                        Belum ada data supplier
+                                    </p>
 
 
-                </tbody>
+                                </td>
 
 
-            </table>
+                            </tr>
+                        @endforelse
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
 
 
         </div>
 
 
     </div>
-
-
-</div>
 
 
 @endsection
